@@ -1,5 +1,5 @@
 module "et1-database" {
-  source             = "git@github.com:hmcts/cnp-module-postgres"
+  source             = "git@github.com:hmcts/cnp-module-postgres?ref=postgresql_tf"
   product            = var.product
   component          = "et1"
   location           = var.location
@@ -13,7 +13,7 @@ module "et1-database" {
 }
 
 module "et3-database" {
-  source             = "git@github.com:hmcts/cnp-module-postgres"
+  source             = "git@github.com:hmcts/cnp-module-postgres?ref=postgresql_tf"
   product            = var.product
   component          = "et3"
   location           = var.location
@@ -27,7 +27,7 @@ module "et3-database" {
 }
 
 module "et-api-database" {
-  source             = "git@github.com:hmcts/cnp-module-postgres"
+  source             = "git@github.com:hmcts/cnp-module-postgres?ref=postgresql_tf"
   product            = var.product
   component          = "api"
   location           = var.location
