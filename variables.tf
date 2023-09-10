@@ -13,6 +13,20 @@ variable "location" {
   default = "UK South"
 }
 
+variable team_contact {
+  default = "#pet-devops"
+}
+
+variable team_name {
+  default = "et-pet"
+}
+
+variable "destroy_me" {
+  type        = string
+  description = "Here be dragons! In the future if this is set to Yes then automation will delete this resource on a schedule. Please set to No unless you know what you are doing"
+  default     = "No"
+}
+
 variable "managed_identity_object_id" {
   default = ""
 }
