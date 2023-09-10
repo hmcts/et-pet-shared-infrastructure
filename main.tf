@@ -5,6 +5,20 @@ resource "azurerm_resource_group" "rg" {
   tags = var.common_tags
 }
 
+locals {
+  tags = merge(
+    var.common_tags,
+    tomap({
+      "Team Contact"        = var.team_contact
+      "Destroy Me"          = var.destroy_me
+      "application"         = "et-pet"
+      "managedBy"           = "et-pet"
+      "businessArea"        = "CFT"
+      "contactSlackChannel" = var.team_contact
+    })
+  )
+}
+
 module "et-key-vault" {
   source                  = "git@github.com:hmcts/cnp-module-key-vault?ref=master"
   product                 = var.product
@@ -20,7 +34,7 @@ module "et-key-vault" {
 resource "azurerm_key_vault_secret" "AZURE_APPINSIGHTS_KEY" {
   name         = "AppInsightsInstrumentationKey"
   value        = azurerm_application_insights.appinsights.instrumentation_key
-  key_vault_id = module.key-vault.key_vault_id
+  key_vault_id = module.et-key-vault.key_vault_id
 }
 
 resource "azurerm_application_insights" "appinsights" {
@@ -43,7 +57,7 @@ resource "azurerm_application_insights" "appinsights" {
 resource "azurerm_key_vault_secret" "AZURE_APPINSIGHTS_KEY_PREVIEW" {
   name         = "AppInsightsInstrumentationKey-Preview"
   value        = azurerm_application_insights.appinsights_preview[0].instrumentation_key
-  key_vault_id = module.key-vault.key_vault_id
+  key_vault_id = module.et-key-vault.key_vault_id
   count        = var.env == "aat" ? 1 : 0
 }
 
