@@ -83,4 +83,6 @@ variable "business_area" {
 
 variable "aks_subscription_id" {}
 
+variable "mgmt_subscription_id" {}
+
 variable "subscription" {}
