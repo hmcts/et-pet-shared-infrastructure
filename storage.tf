@@ -1,27 +1,15 @@
-provider "azurerm" {
-  alias           = "mgmt"
-  subscription_id = var.aks_subscription_id
-  features {}
-}
+locals {
+  standard_subnets = [
+    data.azurerm_subnet.jenkins_subnet.id,
+    data.azurerm_subnet.jenkins_aks_00.id,
+    data.azurerm_subnet.jenkins_aks_01.id,
+    data.azurerm_subnet.cft_aks_00_subnet.id,
+    data.azurerm_subnet.cft_aks_01_subnet.id
+  ]
 
-data "azurerm_virtual_network" "mgmt_vnet" {
-  provider            = azurerm.mgmt
-  name                = "cft-${var.env}-vnet"
-  resource_group_name = "cft-${var.env}-network-rg"
-}
-
-data "azurerm_subnet" "aks00_subnet" {
-  provider             = azurerm.mgmt
-  name                 = "aks-00"
-  virtual_network_name = data.azurerm_virtual_network.mgmt_vnet.name
-  resource_group_name  = data.azurerm_virtual_network.mgmt_vnet.resource_group_name
-}
-
-data "azurerm_subnet" "aks01_subnet" {
-  provider             = azurerm.mgmt
-  name                 = "aks-01"
-  virtual_network_name = data.azurerm_virtual_network.mgmt_vnet.name
-  resource_group_name  = data.azurerm_virtual_network.mgmt_vnet.resource_group_name
+  preview_subnets   = var.env == "aat" ? [data.azurerm_subnet.preview_aks_00_subnet.id, data.azurerm_subnet.preview_aks_01_subnet.id] : []
+  perftest_subnets  = var.env == "perftest" ? [data.azurerm_subnet.perftest_mgmt_subnet.id] : []
+  all_valid_subnets = concat(local.standard_subnets, local.preview_subnets, local.perftest_subnets)
 }
 
 module "storage-account" {
@@ -35,7 +23,7 @@ module "storage-account" {
   account_replication_type   = var.sa_account_replication_type
   common_tags                = var.common_tags
 
-  sa_subnets = [data.azurerm_subnet.aks00_subnet.id,data.azurerm_subnet.aks01_subnet.id]
+  sa_subnets = local.all_valid_subnets
 
   containers = [
     {
