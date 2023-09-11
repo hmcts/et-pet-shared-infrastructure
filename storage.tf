@@ -48,6 +48,9 @@ module "storage-account" {
   account_replication_type   = var.sa_account_replication_type
   private_endpoint_subnet_id = data.azurerm_subnet.private_endpoints.id
   common_tags                = var.common_tags
+
+  sa_subnets = [data.azurerm_subnet.jenkins_subnet.id]
+
   containers = [
     {
       name        = "public"
