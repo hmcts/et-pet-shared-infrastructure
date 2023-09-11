@@ -1,9 +1,3 @@
-terraform {
-  required_version = "1.4.6"
-
-  backend "azurerm" {}
-}
-
 resource "azurerm_resource_group" "rg" {
   name     = "${var.product}-${var.env}"
   location = var.location
