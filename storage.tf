@@ -12,14 +12,14 @@ data "azurerm_virtual_network" "mgmt_vnet" {
 
 data "azurerm_subnet" "aks00_subnet" {
   provider             = azurerm.mgmt
-  name                 = "aks00"
+  name                 = "aks-00"
   virtual_network_name = data.azurerm_virtual_network.mgmt_vnet.name
   resource_group_name  = data.azurerm_virtual_network.mgmt_vnet.resource_group_name
 }
 
 data "azurerm_subnet" "aks01_subnet" {
   provider             = azurerm.mgmt
-  name                 = "aks01"
+  name                 = "aks-01"
   virtual_network_name = data.azurerm_virtual_network.mgmt_vnet.name
   resource_group_name  = data.azurerm_virtual_network.mgmt_vnet.resource_group_name
 }
