@@ -7,6 +7,7 @@ module "storage-account" {
   account_kind             = var.sa_account_kind
   account_tier             = var.sa_account_tier
   account_replication_type = var.sa_account_replication_type
+  common_tags              = var.common_tags
   containers = [
     {
       name        = "public"
