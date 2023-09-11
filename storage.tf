@@ -12,6 +12,19 @@ locals {
   all_valid_subnets = concat(local.standard_subnets, local.preview_subnets, local.perftest_subnets)
 }
 
+#data "azurerm_virtual_network" "mgmt_vnet" {
+#  provider            = azurerm.mgmt
+#  name                = "cft-ptl-vnet"
+#  resource_group_name = "cft-ptl-network-rg"
+#}
+#
+#data "azurerm_subnet" "jenkins_subnet" {
+#  provider             = azurerm.mgmt
+#  name                 = "iaas"
+#  virtual_network_name = data.azurerm_virtual_network.mgmt_vnet.name
+#  resource_group_name  = data.azurerm_virtual_network.mgmt_vnet.resource_group_name
+#}
+
 module "storage-account" {
   source                     = "git@github.com:hmcts/cnp-module-storage-account?ref=master"
   env                        = var.env
