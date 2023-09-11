@@ -1,7 +1,7 @@
 module "storage-account" {
   source                   = "git@github.com:hmcts/cnp-module-storage-account?ref=master"
   env                      = var.env
-  storage_account_name     = "${var.product}-sa-${var.env}"
+  storage_account_name     = replace("${var.product}sa${var.env}", "-", "")
   resource_group_name      = azurerm_resource_group.rg.name
   location                 = var.location
   account_kind             = var.sa_account_kind
