@@ -76,4 +76,11 @@ variable "sa_account_replication_type" {
   }
 }
 
+variable "business_area" {
+  type    = string
+  default = "cft"
+}
+
+variable "aks_subscription_id" {}
+
 variable "subscription" {}
