@@ -41,6 +41,7 @@ module "storage-account" {
     "Storage Blob Data Contributor",
     "Storage Account Contributor",
     "Storage Blob Delegator",
-    "Reader and Data Access"
+    "Reader and Data Access",
+    "Microsoft.Storage/storageAccounts/listKeys/action"
   ]
 }
