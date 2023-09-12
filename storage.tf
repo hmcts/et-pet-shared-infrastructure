@@ -38,6 +38,7 @@ module "storage-account" {
 
   managed_identity_object_id = "d0c32eaa-f190-4b8e-9884-adefce62b143"
   role_assignments = [
-    "Storage Blob Data Contributor"
+    "Storage Blob Data Contributor",
+    "Storage Account Contributor"
   ]
 }
