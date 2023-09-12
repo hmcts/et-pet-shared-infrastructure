@@ -35,11 +35,9 @@ module "storage-account" {
       access_type = "private"
     }
   ]
-}
 
-# Jason temp access
-resource "azurerm_role_assignment" "jason_temp_access" {
-  scope                = module.storage-account.storageaccount_id
-  role_definition_name = "Storage Blob Data Contributor"
-  principal_id         = "d0c32eaa-f190-4b8e-9884-adefce62b143"
+  managed_identity_object_id = "d0c32eaa-f190-4b8e-9884-adefce62b143"
+  role_assignments = [
+    "Storage Blob Data Contributor"
+  ]
 }
