@@ -42,6 +42,6 @@ module "storage-account" {
     "Storage Account Contributor",
     "Storage Blob Delegator",
     "Reader and Data Access",
-    "Microsoft.Storage/storageAccounts/listKeys/action"
+    "Owner"
   ]
 }
