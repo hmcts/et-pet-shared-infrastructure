@@ -19,6 +19,6 @@ resource "azurerm_key_vault_secret" "redis6_access_key" {
 
 resource "azurerm_key_vault_secret" "et-pet-api-redis-url" {
   name         = "et-pet-api-redis-url"
-  value        = "rediss://:${urlencode(module.redis.access_key)}@${module.redis.host_name}:${module.redis.redis_port}"
+  value        = "rediss://:${urlencode(module.etapi-redis.access_key)}@${module.etapi-redis.host_name}:${module.etapi-redis.redis_port}"
   key_vault_id = module.et-key-vault.key_vault_id
 }
