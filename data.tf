@@ -10,8 +10,8 @@ locals {
   cft_aks_network_name    = "cft-${local.aks_env}-vnet"
   cft_aks_network_rg_name = "cft-${local.aks_env}-network-rg"
 
-  preview_vnet_name           = "cft-preview-vnet"
-  preview_vnet_resource_group = "cft-preview-network-rg"
+  preview_vnet_name            = "cft-preview-vnet"
+  preview_vnet_resource_group  = "cft-preview-network-rg"
   perftest_vnet_name           = "core-infra-vnet-perftest"
   perftest_subnet_name         = "core-infra-subnet-mgmtperftest"
   perftest_vnet_resource_group = "core-infra-perftest"

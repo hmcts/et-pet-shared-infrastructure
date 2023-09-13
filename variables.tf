@@ -40,7 +40,11 @@ variable "db_postgresql_user" {
 }
 
 variable "db_storage_mb" {
-  default = "5120"
+  default = "32768"
+}
+
+variable "db_version" {
+  default = 15
 }
 
 variable "sa_account_kind" {
