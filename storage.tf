@@ -35,13 +35,4 @@ module "storage-account" {
       access_type = "private"
     }
   ]
-
-  managed_identity_object_id = "d0c32eaa-f190-4b8e-9884-adefce62b143"
-  role_assignments = [
-    "Storage Blob Data Owner",
-    "Storage Account Contributor",
-    "Storage Blob Delegator",
-    "Reader and Data Access",
-    "Storage Account Key Operator Service Role"
-  ]
 }
