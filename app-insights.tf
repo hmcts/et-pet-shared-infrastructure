@@ -15,11 +15,6 @@ resource "azurerm_key_vault_secret" "et-ai-instrumentation-key" {
   value        = module.application_insights.instrumentation_key
   key_vault_id = module.et-key-vault.key_vault_id
 }
-resource "azurerm_key_vault_secret" "et-ai-app-id" {
-  name         = "et-ai-app-id"
-  value        = module.application_insights.app_id
-  key_vault_id = module.et-key-vault.key_vault_id
-}
 resource "azurerm_key_vault_secret" "et-ai-connection-string" {
   name         = "et-ai-connection-string"
   value        = module.application_insights.connection_string
