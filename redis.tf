@@ -9,6 +9,9 @@ module "etapi-redis" {
   business_area                 = "cft"
   public_network_access_enabled = false
   common_tags                   = var.common_tags
+  sku_name                      = var.sku_name
+  family                        = var.family
+  capacity                      = var.capacity
 }
 
 resource "azurerm_key_vault_secret" "redis6_access_key" {
