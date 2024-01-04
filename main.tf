@@ -33,48 +33,48 @@ module "et-key-vault" {
 
 resource "azurerm_key_vault_secret" "AZURE_APPINSIGHTS_KEY" {
   name         = "AppInsightsInstrumentationKey"
-  value        = azurerm_application_insights.appinsights.instrumentation_key
+  value        = module.application_insights_main.instrumentation_key
   key_vault_id = module.et-key-vault.key_vault_id
 }
 
-resource "azurerm_application_insights" "appinsights" {
-  name                = "${var.product}-appinsights-${var.env}"
-  location            = var.location
+module "application_insights_main" {
+  source = "git@github.com:hmcts/terraform-module-application-insights?ref=main"
+
+  env     = var.env
+  product = var.product
+  name    = "${var.product}-appinsights"
+
   resource_group_name = azurerm_resource_group.rg.name
-  application_type    = "web"
-
-  tags = var.common_tags
-
-  lifecycle {
-    ignore_changes = [
-      # Ignore changes to appinsights as otherwise upgrading to the Azure provider 2.x
-      # destroys and re-creates this appinsights instance..
-      application_type,
-    ]
-  }
+  location            = var.location
+  common_tags         = var.common_tags
 }
 
+moved {
+  from = azurerm_application_insights.appinsights
+  to   = module.application_insights_main.azurerm_application_insights.this
+}
 resource "azurerm_key_vault_secret" "AZURE_APPINSIGHTS_KEY_PREVIEW" {
   name         = "AppInsightsInstrumentationKey-Preview"
-  value        = azurerm_application_insights.appinsights_preview[0].instrumentation_key
+  value        = module.application_insights_preview[0].instrumentation_key
   key_vault_id = module.et-key-vault.key_vault_id
   count        = var.env == "aat" ? 1 : 0
 }
 
-resource "azurerm_application_insights" "appinsights_preview" {
-  name                = "${var.product}-appinsights-preview"
-  location            = var.location
+module "application_insights_preview" {
+  count  = var.env == "aat" ? 1 : 0
+  source = "git@github.com:hmcts/terraform-module-application-insights?ref=main"
+
+  env      = "preview"
+  product  = var.product
+  location = var.location
+  name     = "${var.product}-appinsights"
+
   resource_group_name = azurerm_resource_group.rg.name
-  application_type    = "web"
-  count               = var.env == "aat" ? 1 : 0
 
-  tags = var.common_tags
+  common_tags = var.common_tags
+}
 
-  lifecycle {
-    ignore_changes = [
-      # Ignore changes to appinsights as otherwise upgrading to the Azure provider 2.x
-      # destroys and re-creates this appinsights instance..
-      application_type,
-    ]
-  }
+moved {
+  from = azurerm_application_insights.appinsights_preview[0]
+  to   = module.application_insights_preview[0].azurerm_application_insights.this
 }
