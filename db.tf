@@ -16,7 +16,8 @@ module "et-database" {
     {
       name : "et3"
     },
-    {
+    {result = `az keyvault secret show --name et3-postgres-password --vault-name et-pet-aat`
+puts result
       name : "etapi"
     }
   ]
@@ -114,5 +115,20 @@ resource "azurerm_key_vault_secret" "et3-postgres-database" {
 resource "azurerm_key_vault_secret" "et-api-postgres-database" {
   name         = "et-api-postgres-database"
   value        = "etapi"
+  key_vault_id = module.et-key-vault.key_vault_id
+}
+resource "azurerm_key_vault_secret" "et1-postgres-url" {
+  name         = "et1-postgres-url"
+  value        = "postgres://${module.et-database.username}:${module.et-database.password}@${module.et-database.fqdn}:5432/et1?POOL=15"
+  key_vault_id = module.et-key-vault.key_vault_id
+}
+resource "azurerm_key_vault_secret" "et3-postgres-url" {
+  name         = "et3-postgres-url"
+  value        = "postgres://${module.et-database.username}:${module.et-database.password}@${module.et-database.fqdn}:5432/et3?POOL=15"
+  key_vault_id = module.et-key-vault.key_vault_id
+}
+resource "azurerm_key_vault_secret" "et-api-postgres-url" {
+  name         = "et-api-postgres-url"
+  value        = "postgres://${module.et-database.username}:${module.et-database.password}@${module.et-database.fqdn}:5432/etapi?POOL=15"
   key_vault_id = module.et-key-vault.key_vault_id
 }
