@@ -16,8 +16,7 @@ module "et-database" {
     {
       name : "et3"
     },
-    {result = `az keyvault secret show --name et3-postgres-password --vault-name et-pet-aat`
-puts result
+    {
       name : "etapi"
     }
   ]
