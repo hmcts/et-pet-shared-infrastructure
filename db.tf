@@ -18,6 +18,9 @@ module "et-database" {
     },
     {
       name : "etapi"
+    },
+    {
+      name : "etapi-queue"
     }
   ]
 
@@ -116,6 +119,11 @@ resource "azurerm_key_vault_secret" "et-api-postgres-database" {
   value        = "etapi"
   key_vault_id = module.et-key-vault.key_vault_id
 }
+resource "azurerm_key_vault_secret" "et-api-queue-postgres-database" {
+  name         = "et-api-queue-postgres-database"
+  value        = "etapi-queue"
+  key_vault_id = module.et-key-vault.key_vault_id
+}
 resource "azurerm_key_vault_secret" "et1-postgres-url" {
   name         = "et1-postgres-url"
   value        = "postgres://${module.et-database.username}:${module.et-database.password}@${module.et-database.fqdn}:5432/et1?POOL=15&sslmode=require"
@@ -129,5 +137,10 @@ resource "azurerm_key_vault_secret" "et3-postgres-url" {
 resource "azurerm_key_vault_secret" "et-api-postgres-url" {
   name         = "et-api-postgres-url"
   value        = "postgres://${module.et-database.username}:${module.et-database.password}@${module.et-database.fqdn}:5432/etapi?POOL=15&sslmode=require"
+  key_vault_id = module.et-key-vault.key_vault_id
+}
+resource "azurerm_key_vault_secret" "et-api-queue-postgres-url" {
+  name         = "et-api-queue-postgres-url"
+  value        = "postgres://${module.et-database.username}:${module.et-database.password}@${module.et-database.fqdn}:5432/etapi-queue?POOL=15&sslmode=require"
   key_vault_id = module.et-key-vault.key_vault_id
 }
