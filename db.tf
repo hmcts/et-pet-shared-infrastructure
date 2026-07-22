@@ -18,6 +18,9 @@ module "et-database" {
     },
     {
       name : "etapi"
+    },
+    {
+      name : "etapi-queue"
     }
   ]
 
@@ -114,6 +117,11 @@ resource "azurerm_key_vault_secret" "et3-postgres-database" {
 resource "azurerm_key_vault_secret" "et-api-postgres-database" {
   name         = "et-api-postgres-database"
   value        = "etapi"
+  key_vault_id = module.et-key-vault.key_vault_id
+}
+resource "azurerm_key_vault_secret" "et-api-queue-postgres-database" {
+  name         = "et-api-queue-postgres-database"
+  value        = "etapi-queue"
   key_vault_id = module.et-key-vault.key_vault_id
 }
 resource "azurerm_key_vault_secret" "et1-postgres-url" {
