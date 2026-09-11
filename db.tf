@@ -2,7 +2,7 @@ module "et-database" {
   providers = {
     azurerm.postgres_network = azurerm.postgres_network
   }
-  source = "git@github.com:hmcts/terraform-module-postgresql-flexible?ref=master"
+  source = "git@github.com:hmcts/terraform-module-postgresql-flexible?ref=DTSPO-30107-additional-postgres-admins"
   env    = var.env
 
   product       = var.product
@@ -24,9 +24,10 @@ module "et-database" {
     }
   ]
 
-  pgsql_version        = var.db_version
-  admin_user_object_id = var.jenkins_AAD_objectId
-  common_tags          = var.common_tags
+  pgsql_version                 = var.db_version
+  admin_user_object_id          = var.jenkins_AAD_objectId
+  preserve_legacy_jenkins_admin = false
+  common_tags                   = var.common_tags
 
   location         = var.location
   pgsql_storage_mb = var.db_storage_mb
