@@ -104,3 +104,8 @@ data "azurerm_subnet" "cft_aks_01_subnet" {
   virtual_network_name = local.cft_aks_network_name
   resource_group_name  = local.cft_aks_network_rg_name
 }
+
+data "azurerm_user_assigned_identity" "jenkins" {
+  name                = "jenkins-${var.env}-mi"
+  resource_group_name = "managed-identities-${var.env}-rg"
+}
