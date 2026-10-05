@@ -29,6 +29,7 @@ module "et-key-vault" {
   product_group_name      = "dcd_group_pet_v2"
   common_tags             = var.common_tags
   create_managed_identity = true
+  jenkins_object_id       = data.azurerm_user_assigned_identity.jenkins.principal_id
 }
 
 resource "azurerm_key_vault_secret" "AZURE_APPINSIGHTS_KEY" {
